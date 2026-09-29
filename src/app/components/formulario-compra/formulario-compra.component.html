@@ -1,0 +1,51 @@
+<div class="tarjeta">
+  <h2>Formulario de compra</h2>
+
+  <form [formGroup]="formulario" (ngSubmit)="onSubmit()" novalidate>
+    <div class="campo">
+      <label for="nombre">Nombre completo</label>
+      <input id="nombre" type="text" formControlName="nombre" placeholder="Ej: Ana García" />
+      <div class="error" *ngIf="campoInvalido('nombre')">
+        <span *ngIf="formulario.get('nombre')?.errors?.['required']">El nombre es obligatorio.</span>
+        <span *ngIf="formulario.get('nombre')?.errors?.['minlength']">Debe tener al menos 3 caracteres.</span>
+        <span *ngIf="formulario.get('nombre')?.errors?.['pattern']">Solo se permiten letras y espacios.</span>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label for="correo">Correo electrónico</label>
+      <input id="correo" type="email" formControlName="correo" placeholder="Ej: ana@correo.com" />
+      <div class="error" *ngIf="campoInvalido('correo')">
+        <span *ngIf="formulario.get('correo')?.errors?.['required']">El correo es obligatorio.</span>
+        <span *ngIf="formulario.get('correo')?.errors?.['email']">Ingresa un correo válido.</span>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label for="producto">Producto</label>
+      <select id="producto" formControlName="producto">
+        <option value="" disabled>Selecciona un producto</option>
+        <option *ngFor="let p of productos" [value]="p">{{ p }}</option>
+      </select>
+      <div class="error" *ngIf="campoInvalido('producto')">
+        <span *ngIf="formulario.get('producto')?.errors?.['required']">Selecciona un producto.</span>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label for="cantidad">Cantidad</label>
+      <input id="cantidad" type="number" formControlName="cantidad" min="1" max="100" />
+      <div class="error" *ngIf="campoInvalido('cantidad')">
+        <span *ngIf="formulario.get('cantidad')?.errors?.['required']">La cantidad es obligatoria.</span>
+        <span *ngIf="formulario.get('cantidad')?.errors?.['min']">La cantidad mínima es 1.</span>
+        <span *ngIf="formulario.get('cantidad')?.errors?.['max']">La cantidad máxima es 100.</span>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="enviando">
+      {{ enviando ? 'Procesando...' : 'Confirmar compra' }}
+    </button>
+
+    <p class="exito" *ngIf="mensajeExito">{{ mensajeExito }}</p>
+  </form>
+</div>

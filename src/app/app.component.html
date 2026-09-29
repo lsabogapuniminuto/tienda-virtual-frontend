@@ -1,0 +1,16 @@
+<main class="contenedor">
+  <header class="cabecera">
+    <div class="marca">
+      <img src="assets/images/uniminuto.jpg" alt="Logo Uniminuto" class="logo" />
+      <h1>{{ title }}</h1>
+    </div>
+    <p>Registra una compra y observa el proceso de la transacción en tiempo real.</p>
+  </header>
+
+  <section class="grid">
+    <app-formulario-compra></app-formulario-compra>
+    <app-simulador-eventos></app-simulador-eventos>
+  </section>
+
+  <router-outlet></router-outlet>
+</main>

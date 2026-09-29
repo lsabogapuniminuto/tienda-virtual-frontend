@@ -1,0 +1,42 @@
+<div class="tarjeta">
+  <div class="encabezado">
+    <h2>Simulador en tiempo real</h2>
+    <button type="button" class="btn-limpiar" (click)="limpiarLog()">Limpiar log</button>
+  </div>
+
+  <div class="log" *ngIf="eventos$ | async as eventos">
+    <p class="vacio" *ngIf="eventos.length === 0">Aún no hay eventos. Envía una compra para ver el proceso en vivo.</p>
+
+    <ul>
+      <li *ngFor="let evento of eventos" [class]="'evento evento-' + evento.tipo">
+        <span class="icono">{{ iconoPorTipo(evento.tipo) }}</span>
+        <span class="hora">{{ evento.timestamp | date: 'HH:mm:ss' }}</span>
+        <span class="mensaje">{{ evento.mensaje }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <h3>Historial de transacciones</h3>
+  <div class="historial" *ngIf="historial$ | async as historial">
+    <p class="vacio" *ngIf="historial.length === 0">No se han registrado transacciones todavía.</p>
+
+    <table *ngIf="historial.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Producto</th>
+          <th>Cant.</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of historial">
+          <td class="id-transaccion" [title]="t.idTransaccion">{{ t.idTransaccion.slice(0, 8) }}...</td>
+          <td>{{ t.producto }}</td>
+          <td>{{ t.cantidad }}</td>
+          <td><span [class]="'badge ' + claseEstado(t.estado)">{{ t.estado }}</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
